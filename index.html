@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>韩都家居中古风家居电子图册</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5A2B', 
+                        secondary: '#D2B48C',
+                        dark: '#2C2418',
+                        light: '#F9F6F0'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-hover {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+            .page-full {
+                min-height: 100vh;
+            }
+            .tab-active {
+                color: #8B5A2B;
+                border-color: #8B5A2B;
+                font-weight: 600;
+            }
+            .layout-active {
+                background-color: #8B5A2B;
+                color: white;
+            }
+            .img-modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.9);
+                z-index: 999;
+                justify-content: center;
+                align-items: center;
+            }
+            .img-modal.show {
+                display: flex;
+            }
+            .modal-img {
+                max-width: 95%;
+                max-height: 95%;
+                object-fit: contain;
+            }
+            .modal-nav {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                color: white;
+                font-size: 2rem;
+                background-color: rgba(0,0,0,0.5);
+                width: 40px;
+                height: 60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                user-select: none;
+            }
+            .modal-prev {
+                left: 10px;
+            }
+            .modal-next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark m-0 p-0">
+    <!-- 顶部固定导航栏：含分类切换+布局切换 -->
+    <header class="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <div class="container mx-auto px-4 py-3">
+            <h1 class="text-center text-primary text-xl font-bold mb-2">韩都家居中古风家居电子图册</h1>
+            <!-- 分类切换按钮 -->
+            <div class="flex flex-wrap justify-center gap-2 text-sm mb-2">
+                <button class="tab-btn tab-active px-3 py-1 border-b-2 border-transparent" data-tab="sofa">沙发</button>
+                <button class="tab-btn px-3 py-1 border-b-2 border-transparent" data-tab="bed">软床</button>
+                <button class="tab-btn px-3 py-1 border-b-2 border-transparent" data-tab="cabinet">柜类</button>
+                <button class="tab-btn px-3 py-1 border-b-2 border-transparent" data-tab="table">餐桌</button>
+            </div>
+            <!-- 布局切换按钮 -->
+            <div class="flex justify-center gap-3 text-xs">
+                <button class="layout-btn layout-active px-3 py-1 rounded-full" data-layout="grid">网格布局</button>
+                <button class="layout-btn px-3 py-1 rounded-full" data-layout="vertical">竖屏布局</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 图片放大弹窗：带左右切换 -->
+    <div id="imgModal" class="img-modal">
+        <div class="modal-nav modal-prev"><i class="fa fa-angle-left"></i></div>
+        <img id="modalContent" src="" alt="放大图片" class="modal-img">
+        <div class="modal-nav modal-next"><i class="fa fa-angle-right"></i></div>
+    </div>
+
+    <!-- 主内容区 -->
+    <main class="pt-32">
+        <!-- ========== 1. 网格布局内容（最初版本） ========== -->
+        <div class="layout-container grid-container">
+            <!-- 沙发分类-网格 -->
+            <div id="sofa-tab"  class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4" data-category="sofa">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S03C-B.jpg" alt="S03C-B" class="w-full h-64 object-cover clickable-img" data-index="0">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S03C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">油蜡皮 </p>
+                        <p class="font-bold mt-2">直排：316cm*118cm；踏：88cm*88cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S25A-B.jpg" alt="S25A-B" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S25A-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">298cm*103cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S28A-B.jpg" alt="S28A-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S28A-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">288cm*102cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S26A-A.jpg" alt="S26A-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S26A-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">288cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S23A-A.jpg" alt="S23A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S23A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">302cm*106cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S27A-A.jpg" alt="S27A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S27A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮+棉布</p>
+                        <p class="font-bold mt-2">308cm*100cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S13C-C.jpg" alt="S13C-C" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S13C-C</h3>
+                        <p class="text-sm text-gray-600 mt-1">棉布</p>
+                        <p class="font-bold mt-2">390cm*115cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S16C-B.jpg" alt="S16C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S16C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">雪尼尔</p>
+                        <p class="font-bold mt-2">280cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3551C-B.jpg" alt="F3551C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3551C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">314cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3569C-A.jpg" alt="F3569C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3569C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">310cm*108cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3533A-A.jpg" alt="F3533A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3533A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">302cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3508A-A.jpg" alt="F3508A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3508A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">294cm*100cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S06C-C.jpg" alt="S06C-C" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S06C-C</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">294cm*109cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3535A-G.jpg" alt="F3535A-G" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3535A-G</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">294cm*103cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3535C-B.jpg" alt="F3535C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3535C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">294cm*103cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3535C-A.jpg" alt="F3535C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3535C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">294cm*103cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3535C-C.jpg" alt="F3535C-C" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3535C-C</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">直排：302cm*105cm；踏：79cm*98cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S05C-A.jpg" alt="S05C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S05C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">直排：322cm*125cm；踏：90cm*90cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3553C-B.jpg" alt="F3553C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3553C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">3直排：322cm*125cm；踏：90cm*90cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3553C-A.jpg" alt="F3553C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3553C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">直排：328cm*101cm；踏：82cm*82cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3538A.jpg" alt="F3538A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3538A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">346cm*109cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3550C-A.jpg" alt="F3550C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3550C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">282cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3552C-B.jpg" alt="F3552C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3552C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">280cm*92cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3563A-A.jpg" alt="F3563A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3563A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">直排：297cm*110cm；双人：216cm*110</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3563C-B.jpg" alt="F3563C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3563C-B</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">292cm*104cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F5569C-A.jpg" alt="F5569C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F5569C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">310cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S02C-A.jpg" alt="S02C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S02C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">300cm*108cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S09C-A.jpg" alt="S09C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S09C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">282cm*96cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S01C-A.jpg" alt="S01C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S01C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">直排：318cm*96cm；踏：78cm*98cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3552C-C.jpg" alt="F3552C-C" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3552C-C</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">292cm*100cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S15.jpg" alt="S15" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S15</h3>
+                        <p class="text-sm text-gray-600 mt-1">生态皮</p>
+                        <p class="font-bold mt-2">333cm*124cm*104cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S16.jpg" alt="S16" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S16</h3>
+                        <p class="text-sm text-gray-600 mt-1">雪尼尔</p>
+                        <p class="font-bold mt-2">直排：274cm*105cm；单人：122cm*105cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3508C-B.jpg" alt="F3508C-B" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3508C-B</h3>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S21C-A.jpg" alt="S21C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S21C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">棉布</p>
+                        <p class="font-bold mt-2">286cm*100cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3577A-A.jpg" alt="F3577A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3577A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">290cm*104cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-S22C-A.jpg" alt="S22C-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">S22C-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">棉布</p>
+                        <p class="font-bold mt-2">292cm*97cm</p>
+                    </div>
+                </div>
+  		<div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/sofa-F3550A-A.jpg" alt="F3550A-A" class="w-full h-64 object-cover clickable-img" data-index="2">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">F3550A-A</h3>
+                        <p class="text-sm text-gray-600 mt-1">真皮</p>
+                        <p class="font-bold mt-2">282cm*105cm</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 软床分类-网格 -->
+            <div id="grid-bed-tab" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 hidden" data-category="bed">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-3号床西贡床.jpg" alt="3号床西贡床" class="w-full h-64 object-cover clickable-img" data-index="0">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">3号床西贡床</h3>
+                        <p class="text-sm text-gray-600 mt-1"> 静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-ZS-1号床.jpg" alt="ZS-1号床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">ZS-1号床</h3>
+                        <p class="text-sm text-gray-600 mt-1"> 科技布面料 | 实木床</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-ZS-2号床.jpg" alt="ZS-2号床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">ZS-2号床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-213实木床.jpg" alt="213实木床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">213实木床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-581实木床.jpg" alt="581实木床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">581实木床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-303实木床.jpg" alt="303实木床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">303实木床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-1号床罗马床.jpg" alt="1号床罗马床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">1号床罗马床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/bed-5号艾米床.jpg" alt="5号艾米床" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">5号艾米床</h3>
+                        <p class="text-sm text-gray-600 mt-1">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 柜子分类-网格 -->
+            <div id="grid-cabinet-tab" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 hidden" data-category="cabinet">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/cabinet-01.jpg" alt="双开门实木衣柜" class="w-full h-64 object-cover clickable-img" data-index="0">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">双开门实木衣柜</h3>
+                        <p class="text-sm text-gray-600 mt-1">分区储物 | 挂衣区+抽屉 | 胡桃木色</p>
+                        <p class="font-bold mt-2">￥4,899</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/cabinet-02.jpg" alt="复古雕花餐边柜" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">复古雕花餐边柜</h3>
+                        <p class="text-sm text-gray-600 mt-1">长虹玻璃 | 收纳展示 | 实木框架</p>
+                        <p class="font-bold mt-2">￥3,299</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 餐桌分类-网格 -->
+            <div id="grid-table-tab" class="tab-content grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 hidden" data-category="table">
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/table-01.jpg" alt="方圆两用实木餐桌" class="w-full h-64 object-cover clickable-img" data-index="0">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">方圆两用实木餐桌</h3>
+                        <p class="text-sm text-gray-600 mt-1">可伸缩 | 实木框架 | 搭配四椅</p>
+                        <p class="font-bold mt-2">￥4,199</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
+                    <img src="images/table-02.jpg" alt="复古雕花圆形餐桌" class="w-full h-64 object-cover clickable-img" data-index="1">
+                    <div class="p-4 text-center">
+                        <h3 class="font-bold text-lg text-primary">复古雕花圆形餐桌</h3>
+                        <p class="text-sm text-gray-600 mt-1">岩板桌面 | 雕花桌腿 | 6-8人用</p>
+                        <p class="font-bold mt-2">￥5,399</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 2. 竖屏布局内容（优化版本） ========== -->
+        <div class="layout-container vertical-container hidden">
+            <!-- 沙发分类-竖屏 -->
+            <div id="vertical-sofa-tab" class="tab-content" data-category="sofa">
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S03C-B.jpg" alt="S03C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="0">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S03C-B</h2>
+                        <p class="text-gray-600">油蜡皮</p>
+                        <p class="font-bold mt-2">直排：316cm*118cm；踏：88cm*88cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S25A-B.jpg" alt="S25A-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S25A-B</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">298cm*103cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S28A-B.jpg" alt="S28A-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S28A-B</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">288cm*102cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S26A-A.jpg" alt="S26A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S26A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">288cm*105cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S23A-A.jpg" alt="S23A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S23A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">302cm*106cm9</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S27A-A.jpg" alt="S27A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S27A-A</h2>
+                        <p class="text-gray-600">真皮+棉布</p>
+                        <p class="font-bold mt-2">308cm*100cm</p>
+                    </div>
+                </section>             
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S13C-C.jpg" alt="S13C-C" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S13C-C</h2>
+                        <p class="text-gray-600">棉布</p>
+                        <p class="font-bold mt-2">90cm*115cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S16C-B.jpg" alt="S16C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S16C-B</h2>
+                        <p class="text-gray-600">雪尼尔</p>
+                        <p class="font-bold mt-2">280cm*105cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3551C-B.jpg" alt="F3551C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3551C-B</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">314cm*105cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3569C-A.jpg" alt="F3569C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3569C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">310cm*108cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3533A-A.jpg" alt="F3533A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3533A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">310cm*108cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3508A-A.jpg" alt="F3508A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3508A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">294cm*100cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S06C-C.jpg" alt="S06C-C" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S06C-C</h2>
+                        <p class="text-gray-600">雪尼尔</p>
+                        <p class="font-bold mt-2">294cm*109cm</p>
+                    </div>
+                </section>                
+		<section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3535A-G.jpg" alt="F3535A-G" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3535A-G</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">￥294cm*103cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3535C-B.jpg" alt="F3535C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3535C-B</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">294cm*103cm</p>
+                    </div>
+                </section>
+             <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3535C-A.jpg" alt="F3535C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3535C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">294cm*103cm</p>
+                    </div>
+                </section>
+             <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3535C-C.jpg" alt="F3535C-C" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3535C-C</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">直排：302cm*105cm；踏：79cm*98cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S05C-A.jpg" alt="S05C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S05C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">直排：322cm*125cm；踏：90cm*90cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3553C-B.jpg" alt="F3553C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3553C-B</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">直排：322cm*125cm；踏：90cm*90cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3553C-A.jpg" alt="F3553C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3553C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">直排：328cm*101cm；踏：82cm*82cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3538A.jpg" alt="F3538A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3538A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">346cm*109cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3550C-A.jpg" alt="F3550C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3550C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">282cm*105cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3552C-B.jpg" alt="F3552C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3552C-B</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">280cm*92cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3563A-A.jpg" alt="F3563A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3563A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">直排：297cm*110cm；双人：216cm*110</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F5569C-A.jpg" alt="F5569C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F5569C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">310cm*105cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S02C-A.jpg" alt="S02C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S02C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">300cm*108cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S09C-A.jpg" alt="S09C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S09C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">282cm*96cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S01C-A.jpg" alt="S01C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S01C-A</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">直排：318cm*96cm；踏：78cm*98cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3563C-B.jpg" alt="F3563C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3563C-B</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">292cm*104cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3552C-C.jpg" alt="F3552C-C" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3552C-C</h2>
+                        <p class="text-gray-600">生态皮</p>
+                        <p class="font-bold mt-2">292cm*100cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S15.jpg" alt="S15" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S15</h2>
+                        <p class="text-gray-600">棉布</p>
+                        <p class="font-bold mt-2">333cm*124cm*104cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S16.jpg" alt="S16" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S16</h2>
+                        <p class="text-gray-600">雪尼尔</p>
+                        <p class="font-bold mt-2">直排：274cm*105cm；单人：122cm*105cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3508C-B.jpg" alt="F3508C-B" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3508C-B</h2>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S21C-A.jpg" alt="S21C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S21C-A</h2>
+                        <p class="text-gray-600">棉布</p>
+                        <p class="font-bold mt-2">286cm*100cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3577A-A.jpg" alt="F3577A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3577A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">290cm*104cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-S22C-A.jpg" alt="S22C-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">S22C-A</h2>
+                        <p class="text-gray-600">棉布</p>
+                        <p class="font-bold mt-2">292cm*97cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/sofa-F3550A-A.jpg" alt="F3550A-A" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="2">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">F3550A-A</h2>
+                        <p class="text-gray-600">真皮</p>
+                        <p class="font-bold mt-2">282cm*105cm</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 软床分类-竖屏 -->
+            <div id="vertical-bed-tab" class="tab-content hidden" data-category="bed">
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-3号床西贡床.jpg" alt="3号床西贡床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="0">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">3号床西贡床</h2>
+                        <p class="text-gray-600"> 静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-ZS-1号床.jpg" alt="ZS-1号床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">ZS-1号床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-ZS-2号床.jpg" alt="ZS-2号床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">ZS-2号床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-213实木床.jpg" alt="213实木床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">213实木床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-213实木床.jpg" alt="213实木床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">213实木床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-303实木床.jpg" alt="303实木床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">303实木床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-213实木床.jpg" alt="213实木床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">213实木床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-581实木床.jpg" alt="581实木床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">581实木床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-5号床艾米床.jpg" alt="5号艾米床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">5号艾米床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/bed-1号床罗马床.jpg" alt="1号罗马床" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">1号罗马床</h2>
+                        <p class="text-gray-600">静音床板 | 榫卯结构</p>
+                        <p class="font-bold mt-2">200cm*180cm</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 柜子分类-竖屏 -->
+            <div id="vertical-cabinet-tab" class="tab-content hidden" data-category="cabinet">
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/cabinet-01.jpg" alt="双开门实木衣柜" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="0">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">双开门实木衣柜</h2>
+                        <p class="text-gray-600">分区储物 | 挂衣区+抽屉 | 胡桃木色</p>
+                        <p class="font-bold mt-2">￥4,899</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/cabinet-02.jpg" alt="复古雕花餐边柜" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">复古雕花餐边柜</h2>
+                        <p class="text-gray-600">长虹玻璃柜门 | 收纳展示 | 实木框架</p>
+                        <p class="font-bold mt-2">￥3,299</p>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 餐桌分类-竖屏 -->
+            <div id="vertical-table-tab" class="tab-content hidden" data-category="table">
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/table-01.jpg" alt="方圆两用实木餐桌" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="0">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">方圆两用实木餐桌</h2>
+                        <p class="text-gray-600">可伸缩设计 | 实木框架 | 搭配四椅</p>
+                        <p class="font-bold mt-2">￥4,199</p>
+                    </div>
+                </section>
+                <section class="page-full flex flex-col justify-center items-center p-4 border-b border-gray-200">
+                    <img src="images/table-02.jpg" alt="复古雕花圆形餐桌" class="w-full max-w-lg rounded-xl shadow-lg mb-4 clickable-img" data-index="1">
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-primary mb-1">复古雕花圆形餐桌</h2>
+                        <p class="text-gray-600">岩板桌面 | 雕花桌腿 | 6-8人聚餐</p>
+                        <p class="font-bold mt-2">￥5,399</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- 回到顶部按钮 -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 invisible transition-all duration-300">
+        <i class="fa fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // 全局变量
+        let currentCategory = 'sofa';
+        let currentIndex = 0;
+        let currentLayout = 'grid';
+
+        // 1. 布局切换功能
+        const layoutBtns = document.querySelectorAll('.layout-btn');
+        const layoutContainers = document.querySelectorAll('.layout-container');
+        layoutBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                layoutBtns.forEach(b => b.classList.remove('layout-active'));
+                btn.classList.add('layout-active');
+                currentLayout = btn.getAttribute('data-layout');
+                
+                layoutContainers.forEach(container => {
+                    container.classList.add('hidden');
+                });
+                document.querySelector(`.${currentLayout}-container`).classList.remove('hidden');
+                
+                // 切换布局后同步分类状态
+                tabBtns.forEach(b => b.classList.remove('tab-active'));
+                document.querySelector(`.tab-btn[data-tab="${currentCategory}"]`).classList.add('tab-active');
+                switchTabContent(currentCategory);
+            });
+        });
+
+        // 2. 分类切换功能
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        function switchTabContent(tabName) {
+            const allTabContents = document.querySelectorAll('.tab-content');
+            allTabContents.forEach(content => content.classList.add('hidden'));
+            document.getElementById(`${currentLayout}-${tabName}-tab`).classList.remove('hidden');
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('tab-active'));
+                btn.classList.add('tab-active');
+                currentCategory = btn.getAttribute('data-tab');
+                switchTabContent(currentCategory);
+                window.scrollTo({top:0, behavior:'smooth'});
+            });
+        });
+
+        // 3. 回到顶部功能
+        const backToTop = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if(window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0','invisible');
+                backToTop.classList.add('opacity-100','visible');
+            } else {
+                backToTop.classList.add('opacity-0','invisible');
+                backToTop.classList.remove('opacity-100','visible');
+            }
+        });
+        backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+        // 4. 图片放大+左右切换功能
+        const modal = document.getElementById('imgModal');
+        const modalImg = document.getElementById('modalContent');
+        const modalPrev = document.querySelector('.modal-prev');
+        const modalNext = document.querySelector('.modal-next');
+        const imgs = document.querySelectorAll('.clickable-img');
+
+        function getCurrentCategoryImgs() {
+            return document.querySelectorAll(`#${currentLayout}-${currentCategory}-tab .clickable-img`);
+        }
+
+        imgs.forEach(img => {
+            img.addEventListener('click', () => {
+                currentIndex = parseInt(img.getAttribute('data-index'));
+                modal.classList.add('show');
+                modalImg.src = img.src;
+                modalImg.alt = img.alt;
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal || e.target === modalImg) {
+                modal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        modalPrev.addEventListener('click', () => {
+            const categoryImgs = getCurrentCategoryImgs();
+            currentIndex = (currentIndex - 1 + categoryImgs.length) % categoryImgs.length;
+            modalImg.src = categoryImgs[currentIndex].src;
+        });
+
+        modalNext.addEventListener('click', () => {
+            const categoryImgs = getCurrentCategoryImgs();
+            currentIndex = (currentIndex + 1) % categoryImgs.length;
+            modalImg.src = categoryImgs[currentIndex].src;
+        });
+
+        // 5. 触屏滑动切换（手机适配）
+        let touchStartX = 0;
+        let touchEndX = 0;
+        modal.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        modal.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) {
+                modalNext.click();
+            } else if (touchEndX - touchStartX > 50) {
+                modalPrev.click();
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
